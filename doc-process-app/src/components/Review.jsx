@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import { FileContext } from "../context/FileContext";
+import { LuView } from "react-icons/lu";
+
 
 function Review() {
   const { uploadedFiles, markCompleted } = useContext(FileContext);
@@ -7,7 +9,8 @@ function Review() {
   return (
     <div  className="w-full h-[100vh] flex justify-center items-center">
       <div className="w-[60vw] max-w-xl mx-auto bg-white p-6 rounded shadow-md">
-        <h2 className="text-xl font-semibold mb-4 text-center">Review Files</h2>
+        <h2 className="text-xl font-semibold mb-4 text-center flex gap-4 items-center justify-center ">Review Files <LuView />
+</h2>
 
         {uploadedFiles.length === 0 ? (
           <p className="text-center text-gray-600">No files uploaded yet.</p>

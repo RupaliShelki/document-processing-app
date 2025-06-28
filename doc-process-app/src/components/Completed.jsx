@@ -1,5 +1,7 @@
 import { useContext } from "react";
 import { FileContext } from "../context/FileContext";
+import { MdDownloadDone } from "react-icons/md";
+
 
 function Completed() {
   const { uploadedFiles } = useContext(FileContext);
@@ -11,8 +13,9 @@ function Completed() {
   return (
     <div className="w-full h-[100vh] flex justify-center items-center">
       <div className=" w-[60vw] max-w-xl mx-auto bg-white p-6 rounded shadow-md">
-        <h2 className="text-xl font-semibold mb-4 text-center">
-          Completed Files
+        <h2 className="text-xl font-semibold mb-4 text-center flex gap-4 items-center justify-center">
+          Completed Files <MdDownloadDone />
+
         </h2>
 
         {completedFiles.length === 0 ? (
