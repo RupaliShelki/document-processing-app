@@ -38,7 +38,6 @@ function Dashboard() {
         </button>
       </nav>
 
-      {/* Animated Route Content */}
       <div className="pt-[9vh] px-4">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
