@@ -36,7 +36,7 @@ function Upload() {
   };
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-center px-4 bg-gray-100 gap-6">
+    <div className="w-full min-h-screen flex flex-col items-center justify-center px-4 bg-gray-100 gap-6 pt-12">
       <div className="w-full max-w-xl bg-white p-6 rounded shadow-md border-2 border-dashed border-blue-300 hover:border-blue-500 transition-all duration-200">
         {/* Upload box */}
         <div {...getRootProps()}>
