@@ -18,9 +18,9 @@ function Completed() {
         {completedFiles.length === 0 ? (
           <p className="text-center text-gray-600">No completed files yet.</p>
         ) : (
-          <ul className="list-disc pl-5 text-sm text-gray-700 space-y-2">
+          <ul className="list-decimal list-inside pl-5 text-sm text-gray-700 space-y-2">
             {completedFiles.map((file, index) => (
-              <li key={index} className="text-green-700 font-medium">
+              <li key={index} className="text-green-700 font-medium overflow-hidden text-ellipsis whitespace-nowrap">
                 {file.name}
               </li>
             ))}

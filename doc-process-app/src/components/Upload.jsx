@@ -1,82 +1,78 @@
-import { useState, useContext, useRef } from "react";
+import React, { useCallback, useContext, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { Worker, Viewer } from "@react-pdf-viewer/core";
+import "@react-pdf-viewer/core/lib/styles/index.css";
 import { FileContext } from "../context/FileContext";
+import { LuUpload } from "react-icons/lu";
 
 function Upload() {
-  const [selectedFile, setSelectedFile] = useState(null);
   const { uploadedFiles, addFile } = useContext(FileContext);
-  const inputRef = useRef(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [fileUrl, setFileUrl] = useState(null);
 
-  
-  const handleFileChange = (e) => {
-    const selected = e.target.files[0];
-    if (selected && selected.type === "application/pdf") {
-      setSelectedFile(selected);
+  const onDrop = useCallback((acceptedFiles) => {
+    const file = acceptedFiles[0];
+    if (file && file.type === "application/pdf") {
+      setSelectedFile(file);
+      setFileUrl(URL.createObjectURL(file));
     } else {
-      alert("Please select a PDF file");
-      setSelectedFile(null);
+      alert("Please upload a valid PDF file.");
     }
-  };
+  }, []);
+
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    accept: { "application/pdf": [".pdf"] },
+  });
 
   const handleUpload = () => {
     if (selectedFile) {
-      addFile(selectedFile); 
+      addFile(selectedFile); // Add to global list
       setSelectedFile(null);
-      if (inputRef.current) inputRef.current.value = null;
+      setFileUrl(null);
     } else {
       alert("No file selected");
     }
   };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    const droppedFile = e.dataTransfer.files[0];
-    if (droppedFile && droppedFile.type === "application/pdf") {
-      setSelectedFile(droppedFile);
-      if (inputRef.current) inputRef.current.value = null;
-    } else {
-      alert("Please drop a valid PDF file");
-    }
-  };
-
-  const handleDragOver = (e) => {
-    e.preventDefault(); 
-  };
-
   return (
-    <div className="w-full min-h-screen flex justify-center items-center px-4 bg-gray-100">
-      <div
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        className="w-full max-w-xl bg-white p-6 rounded shadow-md border-2 border-dashed border-blue-300 hover:border-blue-500 transition-all duration-200"
-      >
-        <h2 className="text-xl font-semibold mb-6 text-center">Upload PDF</h2>
-
-        <p className="text-center text-sm text-gray-500 mb-2">
-          Drag and drop a PDF file here or choose manually.
-        </p>
-
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-4">
-          <input
-            type="file"
-            accept=".pdf"
-            ref={inputRef}
-            onChange={handleFileChange}
-            className="file:bg-blue-500 file:text-white file:px-4 file:py-2 file:rounded file:border-0 file:cursor-pointer file:hover:bg-blue-600 w-full sm:w-auto"
-          />
-          <button
-            onClick={handleUpload}
-            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded w-full sm:w-auto"
-          >
-            Upload
-          </button>
-        </div>
-
-        {selectedFile && (
-          <p className="text-sm text-blue-600 mb-4 text-center overflow-hidden text-ellipsis whitespace-nowrap">
-            Selected: {selectedFile.name}
+    <div className="w-full min-h-screen flex flex-col items-center justify-center px-4 bg-gray-100 gap-6">
+      <div className="w-full max-w-xl bg-white p-6 rounded shadow-md border-2 border-dashed border-blue-300 hover:border-blue-500 transition-all duration-200">
+        {/* Upload box */}
+        <div {...getRootProps()}>
+          <h2 className="text-xl font-semibold mb-4 text-center flex gap-4 items-center justify-center ">
+            Upload PDF <LuUpload />
+          </h2>
+          <p className="text-center text-sm text-gray-500 mb-2">
+            Drag and drop a PDF file here or click to select
           </p>
-        )}
+          <input {...getInputProps()} />
+          {selectedFile && (
+            <p className="text-sm text-blue-600 mt-2 text-center overflow-hidden text-ellipsis whitespace-nowrap">
+              Selected: {selectedFile.name}
+            </p>
+          )}
+        </div>
+        {/* upload button */}
+        <button
+          onClick={handleUpload}
+          className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          Upload
+        </button>
+      </div>
 
+      {/* PDF Preview */}
+      {fileUrl && (
+        <div className="w-full max-w-3xl h-[500px] border shadow-md rounded overflow-hidden">
+          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
+            <Viewer fileUrl={fileUrl} />
+          </Worker>
+        </div>
+      )}
+
+      {/* Uploaded Files */}
+      <div className="w-full max-w-xl bg-white p-4 rounded shadow-md">
         <h3 className="font-semibold mb-2">Uploaded Files:</h3>
         <ul className="list-disc list-inside text-sm text-gray-700 max-h-40 overflow-auto">
           {uploadedFiles.map((file, index) => (

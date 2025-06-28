@@ -9,7 +9,7 @@ function Login() {
 
   const handleLogin = () => {
     if (username === "admin" && password === "admin123") {
-      localStorage.setItem("isLoggedIn", "true"); // ✅ Login flag
+      localStorage.setItem("isLoggedIn", "true"); // 
       navigate("/dashboard/upload");
     }
     else{
@@ -18,16 +18,17 @@ function Login() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen bg-gray-500 ">
       <div className=" w-[30%] flex flex-col gap-4  bg-white rounded shadow-md p-6">
         <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
           {" "}
-          Login
+          Login to your account
         </h2>
         {/* usrtname */}
         <input
           type="text"
           placeholder="Username"
+          required
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           className="w-full p-3 border rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
@@ -36,6 +37,7 @@ function Login() {
         <input
           type="password"
           placeholder="Password"
+          required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full p-3 border rounded mb-6 focus:outline-none focus:ring-2 focus:ring-blue-400"

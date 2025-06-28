@@ -3,6 +3,8 @@ import Upload from "./Upload";
 import Review from "./Review";
 import Completed from "./Completed";
 import { IoMdLogOut } from "react-icons/io";
+import { FaRegSmileBeam } from "react-icons/fa";
+
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -44,6 +46,19 @@ function Dashboard() {
       </nav>
       <div className="">
         <Routes>
+          <Route
+            index
+            element={
+              <div className="w-full min-h-screen flex justify-center items-center px-4 bg-gray-100 grid">
+                <div className="w-full max-w-xl bg-white p-6 rounded shadow-md">
+                  <h2 className="text-xl font-semibold mb-6 text-center flex items-center justify-center gap-3">
+                    Welcome to Document Processing app <FaRegSmileBeam className="w-[30px] h-[30px]" />
+                  </h2>
+                  <span className="text-center">Please Select Tab</span>
+                </div>
+              </div>
+            }
+          />
           <Route path="upload" element={<Upload />} />
           <Route path="review" element={<Review />} />
           <Route path="completed" element={<Completed />} />
