@@ -1,0 +1,54 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    if (username === "admin" && password === "admin123") {
+      localStorage.setItem("isLoggedIn", "true"); // ✅ Login flag
+      navigate("/dashboard/upload");
+    }
+    else{
+      alert("Invalid Credential")
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className=" w-[30%] flex flex-col gap-4  bg-white rounded shadow-md p-6">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+          {" "}
+          Login
+        </h2>
+        {/* usrtname */}
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="w-full p-3 border rounded mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        {/* password */}
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full p-3 border rounded mb-6 focus:outline-none focus:ring-2 focus:ring-blue-400"
+        />
+        <button
+          onClick={handleLogin}
+          className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold p-3 rounded cursor-pointer "
+        >
+          Login
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default Login;

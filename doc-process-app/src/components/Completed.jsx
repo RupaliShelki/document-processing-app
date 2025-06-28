@@ -1,0 +1,34 @@
+import { useContext } from "react";
+import { FileContext } from "../context/FileContext";
+
+function Completed() {
+  const { uploadedFiles } = useContext(FileContext);
+
+  const completedFiles = uploadedFiles.filter(
+    (file) => file.status === "completed"
+  );
+
+  return (
+    <div className="w-full h-[100vh] flex justify-center items-center">
+      <div className=" w-[60vw] max-w-xl mx-auto bg-white p-6 rounded shadow-md">
+        <h2 className="text-xl font-semibold mb-4 text-center">
+          Completed Files
+        </h2>
+
+        {completedFiles.length === 0 ? (
+          <p className="text-center text-gray-600">No completed files yet.</p>
+        ) : (
+          <ul className="list-disc pl-5 text-sm text-gray-700 space-y-2">
+            {completedFiles.map((file, index) => (
+              <li key={index} className="text-green-700 font-medium">
+                {file.name}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default Completed;
