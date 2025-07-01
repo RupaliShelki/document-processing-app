@@ -34,7 +34,7 @@ function Dashboard() {
           className="flex items-center gap-1 text-white font-semibold hover:text-black"
         >
           <IoMdLogOut className="w-[24px] h-[24px]" />
-          <span className="text-sm">Logout</span>
+          <span className="text-sm cursor-pointer">Logout</span>
         </button>
       </nav>
 

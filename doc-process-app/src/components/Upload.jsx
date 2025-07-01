@@ -56,7 +56,7 @@ function Upload() {
         {/* upload button */}
         <button
           onClick={handleUpload}
-          className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+          className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded cursor-pointer "
         >
           Upload
         </button>

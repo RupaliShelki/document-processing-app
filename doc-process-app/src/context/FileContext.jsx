@@ -23,14 +23,26 @@ export function FileProvider({ children }) {
     localStorage.setItem("uploadedFiles", JSON.stringify(uploadedFiles));
   }, [uploadedFiles]);
 
+
+
   const addFile = (file) => {
+  const reader = new FileReader();
+  reader.onload = () => {
+    const base64 = reader.result;
+
     const newFile = {
       name: file.name || "Untitled",
       type: file.type || "",
       status: "pending",
+      base64, 
     };
+
     setUploadedFiles((prev) => [...prev, newFile]);
   };
+
+  reader.readAsDataURL(file); 
+};
+
 
   const markCompleted = (index) => {
     setUploadedFiles((prev) =>
