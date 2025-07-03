@@ -20,7 +20,11 @@ export function FileProvider({ children }) {
   }, []);
 
   useEffect(() => {
+
+    if(uploadedFiles.length>0){
     localStorage.setItem("uploadedFiles", JSON.stringify(uploadedFiles));
+
+    }
   }, [uploadedFiles]);
 
 
